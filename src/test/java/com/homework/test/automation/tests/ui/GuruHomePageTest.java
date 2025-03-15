@@ -37,7 +37,7 @@ public class GuruHomePageTest extends AbstractTestNGSpringContextTests {
         }
     }
 
-//    @Test
+    @Test
     public void testIFrameAndTabHandling() {
         // Given - When - Then
         guruHomePage.openPage()
@@ -47,7 +47,7 @@ public class GuruHomePageTest extends AbstractTestNGSpringContextTests {
                 .fillEmailAndSubmit("test@example.com")
                 .handlePopup()
                 .clickSeleniumDropdown()
-                .chooseFromDropDown("Tooltip")
+                .clickTooltipDropdown()
                 .downloadNowButtonShouldBePresent();
     }
 }

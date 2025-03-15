@@ -4,14 +4,14 @@ import com.homework.test.automation.pageobjects.BasePageObject;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 public class GuruHomePage extends BasePageObject {
     private static final String GURU_PAGE_URL = "https://demo.guru99.com/test/guru99home/";
 
-    private TooltipPage tooltipPage;
+    private final TooltipPage tooltipPage;
 
     @FindBy(xpath = "//h3[contains(text(), 'iFrame will not show if you have adBlock extension enabled')]/following-sibling::iframe")
     private WebElement iFrame;
@@ -26,8 +26,10 @@ public class GuruHomePage extends BasePageObject {
     private WebElement submitButton;
 
     @FindBy(xpath = "//li[@class='dropdown']/a[contains(.,'Selenium')]")
-//    @FindBy(css = "li.dropdown > a:contains('Selenium')")
     private WebElement seleniumDropdown;
+
+    @FindBy(xpath = "//a[contains(.,'Tooltip')]")
+    private WebElement tooltip;
 
     public GuruHomePage(final WebDriver driver, final TooltipPage tooltipPage) {
         super(driver);
@@ -41,7 +43,7 @@ public class GuruHomePage extends BasePageObject {
 
     public GuruHomePage switchToIframe() {
         waitForElementToBeVisible(iFrame);
-        scrollTo(iFrame);
+        scrollToWithJsScript(iFrame);
         driver.switchTo().frame(iFrame);
         return this;
     }
@@ -69,9 +71,8 @@ public class GuruHomePage extends BasePageObject {
         final Alert popup = driver.switchTo().alert();
         Assert.assertTrue(popup.getText().contains("Successfully"));
 
-        popup.dismiss();
+        popup.accept();
 
-        driver.switchTo().defaultContent();
         return this;
     }
 
@@ -83,12 +84,20 @@ public class GuruHomePage extends BasePageObject {
 
     public GuruHomePage clickSeleniumDropdown() {
         waitForPageToLoad();
-        waitForElementToBeClickable(seleniumDropdown).click();
+        scrollToWithJsScript(seleniumDropdown);
+        waitForElementToBeVisible(seleniumDropdown);
+
+        final Actions actions = new Actions(driver);
+        actions.moveToElement(seleniumDropdown).perform();
+        waitForElementToBeClickable(seleniumDropdown);
+        actions.click(seleniumDropdown).perform();
         return this;
     }
 
-    public TooltipPage chooseFromDropDown(final String valueToSelect) {
-        new Select(seleniumDropdown).selectByValue(valueToSelect);
+    public TooltipPage clickTooltipDropdown() {
+        waitForElementToBeVisible(tooltip);
+        waitForElementToBeClickable(tooltip).click();
+
         return tooltipPage;
     }
 }

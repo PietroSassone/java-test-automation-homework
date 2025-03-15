@@ -15,7 +15,7 @@ import java.util.NoSuchElementException;
 import static java.lang.String.valueOf;
 
 public class BasePageObject {
-    public static final long PAGE_OR_ELEMENT_LOAD_WAIT_SECONDS = 5;
+    public static final long PAGE_OR_ELEMENT_LOAD_WAIT_SECONDS = 10;
     private static final Logger LOGGER = LoggerFactory.getLogger(BasePageObject.class);
 
     private static final String COMPLETE = "complete";
@@ -29,7 +29,7 @@ public class BasePageObject {
         PageFactory.initElements(driver, this);
     }
 
-    public void scrollTo(final WebElement webElement) {
+    public void scrollToWithJsScript(final WebElement webElement) {
         ((JavascriptExecutor) driver).executeScript(SCROLL_INTO_VIEW_SCRIPT, webElement);
     }
 

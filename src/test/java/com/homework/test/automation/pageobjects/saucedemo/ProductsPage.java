@@ -36,7 +36,7 @@ public class ProductsPage extends BasePageObject {
     }
 
     public ProductsPage scrollToTheBottom() {
-        scrollTo(footer);
+        scrollToWithJsScript(footer);
         return this;
     }
 
