@@ -16,19 +16,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 @ContextConfiguration(classes = SpringConfig.class)
-public class SauceDemoHomePageTests extends AbstractTestNGSpringContextTests {
-
-    @Autowired
-    private SauceLoginPage sauceLoginPage;
-
-    @Autowired
-    private ProductsPage productsPage;
-
-    @Autowired
-    private CartPage cartPage;
-
-    @Autowired
-    private CheckoutPage checkoutPage;
+public class SauceDemoHomePageTest extends AbstractTestNGSpringContextTests {
+    /**
+     * I choose to write these tests without Cucumber for an easier showcase of fluent page objects.
+     * If you'd like to see some of my Cucumber test examples, see this repo: https://github.com/PietroSassone/selenium-ta-demo
+     */
 
     @Autowired
     private DriverFactory driverFactory;
@@ -38,10 +30,18 @@ public class SauceDemoHomePageTests extends AbstractTestNGSpringContextTests {
 
     private WebDriver driver;
 
+    private SauceLoginPage sauceLoginPage;
+
     @BeforeClass
     public void setup() {
         userManager.initUserManager();
-        driver = sauceLoginPage.getDriver();
+        driver = driverFactory.createAndGetWebDriver();
+
+        final CheckoutPage checkoutPage = new CheckoutPage(driver);
+        final CartPage cartPage = new CartPage(driver, checkoutPage);
+        final ProductsPage productsPage = new ProductsPage(driver, cartPage);
+
+        sauceLoginPage = new SauceLoginPage(driver, productsPage);
     }
 
     @AfterClass
@@ -51,8 +51,9 @@ public class SauceDemoHomePageTests extends AbstractTestNGSpringContextTests {
         }
     }
 
-    @Test
+    @Test(priority = 1)
     public void testLoginProcess() {
+        // Given - When - Then
         sauceLoginPage
                 .openPage()
                 .login(userManager.getUserByName("performance_glitch_user"))
@@ -64,11 +65,13 @@ public class SauceDemoHomePageTests extends AbstractTestNGSpringContextTests {
                 .fillDetails("Thomas", "Anderson", "12345")
                 .clickContinue()
                 .clickFinish()
-                .validateConfirmationMessage("Thank you for your order!");
+                .validateConfirmationMessage("Thank you for your order!")
+                .logOut();
     }
 
-    @Test
+    @Test(priority = 2)
     public void testLoginErrorMessagesAndFooter() {
+        // Given - When - Then
         sauceLoginPage
                 .openPage()
                 .clickLoginWithoutCredentials()

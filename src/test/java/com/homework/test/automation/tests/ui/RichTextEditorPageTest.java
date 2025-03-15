@@ -12,32 +12,36 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 @ContextConfiguration(classes = SpringConfig.class)
-public class RichTextEditorPageTests extends AbstractTestNGSpringContextTests {
-
-    @Autowired
-    private RichTextEditorPage richTextEditorPage;
+public class RichTextEditorPageTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private DriverFactory driverFactory;
 
     private WebDriver driver;
 
+    private RichTextEditorPage richTextEditorPage;
+
     @BeforeClass
     public void setup() {
-        driver = richTextEditorPage.getDriver();
+        driver = driverFactory.createAndGetWebDriver();
+        richTextEditorPage = new RichTextEditorPage(driver);
     }
 
     @AfterClass
     public void tearDown() {
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 
     @Test
     public void testRichTextEditor() {
+        // Given
         final String inputTextAutomation = "Automation ";
         final String inputTextTest = "Test";
         final String inputTextExample = " Example";
 
+        // When - Then
         richTextEditorPage.openPage()
                 .toggleBold()
                 .enterText(inputTextAutomation)

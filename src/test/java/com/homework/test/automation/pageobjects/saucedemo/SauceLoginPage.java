@@ -1,21 +1,16 @@
 package com.homework.test.automation.pageobjects.saucedemo;
 
-import com.homework.test.automation.factory.DriverFactory;
 import com.homework.test.automation.model.User;
 import com.homework.test.automation.pageobjects.BasePageObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.testng.Assert;
 
-@Component
 public class SauceLoginPage extends BasePageObject {
     private static final String LOGIN_URL = "https://www.saucedemo.com/inventory.html";
 
-    @Autowired
-    private ProductsPage productsPage;
+    private final ProductsPage productsPage;
 
     @FindBy(id = "user-name")
     private WebElement usernameField;
@@ -29,11 +24,9 @@ public class SauceLoginPage extends BasePageObject {
     @FindBy(className = "error-message-container")
     private WebElement loginErrorMessage;
 
-    private WebDriver webDriver;
-
-    public SauceLoginPage(final DriverFactory driverFactory) {
-        super(driverFactory);
-        this.webDriver = driverFactory.createAndGetWebDriver();
+    public SauceLoginPage(final WebDriver driver, final ProductsPage productsPage) {
+        super(driver);
+        this.productsPage = productsPage;
     }
 
     public SauceLoginPage openPage() {

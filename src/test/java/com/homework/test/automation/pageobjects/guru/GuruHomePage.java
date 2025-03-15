@@ -1,21 +1,16 @@
 package com.homework.test.automation.pageobjects.guru;
 
-import com.homework.test.automation.factory.DriverFactory;
 import com.homework.test.automation.pageobjects.BasePageObject;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.testng.Assert;
 
-@Component
 public class GuruHomePage extends BasePageObject {
     private static final String GURU_PAGE_URL = "https://demo.guru99.com/test/guru99home/";
 
-    @Autowired
     private TooltipPage tooltipPage;
 
     @FindBy(xpath = "//h3[contains(text(), 'iFrame will not show if you have adBlock extension enabled')]/following-sibling::iframe")
@@ -34,11 +29,9 @@ public class GuruHomePage extends BasePageObject {
 //    @FindBy(css = "li.dropdown > a:contains('Selenium')")
     private WebElement seleniumDropdown;
 
-    private WebDriver webDriver;
-
-    public GuruHomePage(final DriverFactory driverFactory) {
-        super(driverFactory);
-        this.webDriver = driverFactory.createAndGetWebDriver();
+    public GuruHomePage(final WebDriver driver, final TooltipPage tooltipPage) {
+        super(driver);
+        this.tooltipPage = tooltipPage;
     }
 
     public GuruHomePage openPage() {
@@ -49,7 +42,7 @@ public class GuruHomePage extends BasePageObject {
     public GuruHomePage switchToIframe() {
         waitForElementToBeVisible(iFrame);
         scrollTo(iFrame);
-        webDriver.switchTo().frame(iFrame);
+        driver.switchTo().frame(iFrame);
         return this;
     }
 
@@ -59,24 +52,26 @@ public class GuruHomePage extends BasePageObject {
     }
 
     public GuruHomePage handleNewTab() {
-        String originalHandle = webDriver.getWindowHandle();
-        for (String handle : webDriver.getWindowHandles()) {
+        final String originalHandle = driver.getWindowHandle();
+
+        driver.getWindowHandles().forEach(handle -> {
             if (!handle.equals(originalHandle)) {
-                webDriver.switchTo().window(handle);
-                webDriver.close();
+                driver.switchTo().window(handle);
+                driver.close();
             }
-        }
-        webDriver.switchTo().window(originalHandle);
+        });
+
+        driver.switchTo().window(originalHandle);
         return this;
     }
 
     public GuruHomePage handlePopup() {
-        final Alert popup = webDriver.switchTo().alert();
+        final Alert popup = driver.switchTo().alert();
         Assert.assertTrue(popup.getText().contains("Successfully"));
 
         popup.dismiss();
 
-        webDriver.switchTo().defaultContent();;
+        driver.switchTo().defaultContent();
         return this;
     }
 
@@ -87,6 +82,7 @@ public class GuruHomePage extends BasePageObject {
     }
 
     public GuruHomePage clickSeleniumDropdown() {
+        waitForPageToLoad();
         waitForElementToBeClickable(seleniumDropdown).click();
         return this;
     }

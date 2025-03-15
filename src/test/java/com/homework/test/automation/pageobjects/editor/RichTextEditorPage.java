@@ -1,15 +1,12 @@
 package com.homework.test.automation.pageobjects.editor;
 
-import com.homework.test.automation.factory.DriverFactory;
 import com.homework.test.automation.pageobjects.BasePageObject;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.springframework.stereotype.Component;
 import org.testng.Assert;
 
-@Component
 public class RichTextEditorPage extends BasePageObject {
     private static final String EDITOR_PAGE_URL = "https://onlinehtmleditor.dev";
 
@@ -22,11 +19,8 @@ public class RichTextEditorPage extends BasePageObject {
     @FindBy(xpath = "//button[contains(., 'Underline')]")
     private WebElement underlineButton;
 
-    private WebDriver webDriver;
-
-    public RichTextEditorPage(final DriverFactory driverFactory) {
-        super(driverFactory);
-        this.webDriver = driverFactory.createAndGetWebDriver();
+    public RichTextEditorPage(final WebDriver driver) {
+        super(driver);
     }
 
     public RichTextEditorPage openPage() {

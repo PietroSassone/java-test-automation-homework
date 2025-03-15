@@ -11,7 +11,7 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
 @ContextConfiguration(classes = SpringConfig.class)
-public class JsonPlaceholderApiTests extends AbstractTestNGSpringContextTests {
+public class JsonPlaceholderApiTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private JsonPlaceHolderClientApache apacheClient;
@@ -24,16 +24,20 @@ public class JsonPlaceholderApiTests extends AbstractTestNGSpringContextTests {
 
     @Test
     public void testGetUsersWithApacheClient() {
+        // Given - When
         final JsonNode jsonResponse = jsonHelper.parseJsonString(apacheClient.getUsers(200));
 
+        // Then
         jsonHelper.logNamesAndEmailsFromJson(jsonResponse);
         jsonHelper.assertFirstEmail(jsonResponse);
     }
 
     @Test
     public void testGetUsersWithOkHttpClient() {
+        // Given - When
         final JsonNode jsonResponse = jsonHelper.parseJsonString(okHttpClient.getUsers(200));
 
+        // Then
         jsonHelper.logNamesAndEmailsFromJson(jsonResponse);
         jsonHelper.assertFirstEmail(jsonResponse);
     }

@@ -1,20 +1,15 @@
 package com.homework.test.automation.pageobjects.saucedemo;
 
-import com.homework.test.automation.factory.DriverFactory;
 import com.homework.test.automation.pageobjects.BasePageObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.testng.Assert;
 
-@Component
 public class ProductsPage extends BasePageObject {
 
-    @Autowired
-    private CartPage cartPage;
+    private final CartPage cartPage;
 
     @FindBy(className = "shopping_cart_badge")
     private WebElement cartItemNumber;
@@ -25,15 +20,13 @@ public class ProductsPage extends BasePageObject {
     @FindBy(className = "footer_copy")
     private WebElement footer;
 
-    private WebDriver webDriver;
-
-    public ProductsPage(final DriverFactory driverFactory) {
-        super(driverFactory);
-        this.webDriver = driverFactory.createAndGetWebDriver();
+    public ProductsPage(final WebDriver driver, final CartPage cartPage) {
+        super(driver);
+        this.cartPage = cartPage;
     }
 
     public ProductsPage addItemToCart(final String itemName) {
-        waitForElementToBeVisible(webDriver.findElement(By.xpath("//button[contains(@id,'add-to-cart-" + itemName + "')]"))).click();
+        waitForElementToBeVisible(driver.findElement(By.xpath("//button[contains(@id,'add-to-cart-" + itemName + "')]"))).click();
         return this;
     }
 

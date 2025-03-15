@@ -1,7 +1,5 @@
 package com.homework.test.automation.pageobjects;
 
-import com.homework.test.automation.drivercreators.FirefoxDriverCreator;
-import com.homework.test.automation.factory.DriverFactory;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,16 +22,10 @@ public class BasePageObject {
     private static final String RETURN_DOCUMENT_READY_STATE = "return document.readyState";
     private static final String SCROLL_INTO_VIEW_SCRIPT = "arguments[0].scrollIntoView();";
 
-    protected final DriverFactory driverFactory;
-    protected WebDriver driver;
+    protected final WebDriver driver;
 
-    public WebDriver getDriver() {
-        return driver;
-    }
-
-    public BasePageObject(final DriverFactory driverFactory) {
-        this.driverFactory = driverFactory;
-        this.driver = driverFactory.createAndGetWebDriver();
+    public BasePageObject(final WebDriver driver) {
+        this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
@@ -42,7 +34,6 @@ public class BasePageObject {
     }
 
     protected void navigateToUrl(final String url) {
-        driver = driverFactory.getExistingWebDriver();
         LOGGER.info("WebDriver navigating to URL {}", url);
         driver.get(url);
         waitForPageToLoad();

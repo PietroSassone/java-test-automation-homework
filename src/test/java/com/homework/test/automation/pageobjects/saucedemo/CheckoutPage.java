@@ -1,14 +1,11 @@
 package com.homework.test.automation.pageobjects.saucedemo;
 
-import com.homework.test.automation.factory.DriverFactory;
 import com.homework.test.automation.pageobjects.BasePageObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.springframework.stereotype.Component;
 import org.testng.Assert;
 
-@Component
 public class CheckoutPage extends BasePageObject {
 
     @FindBy(id = "first-name")
@@ -29,15 +26,18 @@ public class CheckoutPage extends BasePageObject {
     @FindBy(className = "complete-header")
     private WebElement confirmationMessage;
 
-    private WebDriver webDriver;
+    @FindBy(id = "react-burger-menu-btn")
+    private WebElement sidebarMenu;
 
-    public CheckoutPage(final DriverFactory driverFactory) {
-        super(driverFactory);
-        this.webDriver = driverFactory.createAndGetWebDriver();
+    @FindBy(id = "logout_sidebar_link")
+    private WebElement logoutLink;
+
+    public CheckoutPage(final WebDriver driver) {
+        super(driver);
     }
 
     public CheckoutPage fillDetails(final String firstName, final String lastName, final String postalCode) {
-        firstNameInput.sendKeys(firstName);
+        waitForElementToBeClickable(firstNameInput).sendKeys(firstName);
         lastNameInput.sendKeys(lastName);
         postalCodeField.sendKeys(postalCode);
         return this;
@@ -53,7 +53,14 @@ public class CheckoutPage extends BasePageObject {
         return this;
     }
 
-    public void validateConfirmationMessage(final String expectedMessage) {
+    public CheckoutPage validateConfirmationMessage(final String expectedMessage) {
         Assert.assertEquals(confirmationMessage.getText(), expectedMessage);
+        return this;
+    }
+
+    public void logOut() {
+        waitForElementToBeClickable(sidebarMenu).click();
+        waitForElementToBeClickable(logoutLink).click();
+        waitForPageToLoad();
     }
 }
