@@ -27,7 +27,7 @@ jobs:
           java-version: '17'
 
       - name: Run tests
-        run: mvn clean test -browserName=${{ github.event.inputs.browserName }} -Dheadless=${{ github.event.inputs.headless }}
+        run: mvn clean test -DbrowserName=${{ github.event.inputs.browserName }} -Dheadless=${{ github.event.inputs.headless }}
         continue-on-error: true
 
       - name: Archive test logs and Surefire + TestNG report
