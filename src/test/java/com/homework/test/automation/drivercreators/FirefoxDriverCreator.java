@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FirefoxDriverCreator {
 
-    @Value("${headless:false}")
+    @Value("${headless:true}")
     private Boolean headless;
 
     public WebDriver createFirefoxDriver() {

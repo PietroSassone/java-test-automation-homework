@@ -35,10 +35,15 @@ Supported arguments:
 | argument name     | supported values      | default value | description                                                |
 | ----------------- | --------------------- | ------------- | ---------------------------------------------------------- |
 | browserName       | chrome, edge, firefox | chrome        | tells the tests which browser to use                       |
-| headless          | true, false           | false         | sets whether the tests should run with GUI enabled         |
+| headless          | true, false           | true          | sets whether the tests should run with GUI enabled         |
 
-Example command to run the tests with MS Edge Driver in headless mode:  
+Example command to run the tests with MS Edge Driver in non-headless mode:  
 ```
-mvn clean test -DbrowserName=edge -Dheadless=true
+mvn clean test -DbrowserName=edge -Dheadless=false
 ```
- 
+
+**5. GitHub Action**
+The framework has a simple GitHub Actions workflow setup to run the test on a CI job.
+1. The job accepts 1 input: the browserName argument to set the browser.
+2. The browser is set to headless mode by default for the job.
+3. The workflow uploads the zipped test reports and logs at the end.
