@@ -29,7 +29,7 @@ public class GuruHomePageTest extends AbstractTestNGSpringContextTests {
     private GuruHomePage guruHomePage;
 
     @BeforeClass
-    public void setup(ITestContext context) {
+    public void setup(final ITestContext context) {
         driver = driverFactory.createAndGetWebDriver();
 
         final TooltipPage tooltipPage = new TooltipPage(driver);
