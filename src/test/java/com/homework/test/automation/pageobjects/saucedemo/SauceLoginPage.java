@@ -47,7 +47,7 @@ public class SauceLoginPage extends BasePageObject {
     }
 
     public ProductsPage login(final User user) {
-        log.info("Logging in with use {}.", user.username());
+        log.info("Logging in with user {}.", user.username());
         usernameField.sendKeys(user.username());
         passwordField.sendKeys(user.password());
         loginButton.click();
