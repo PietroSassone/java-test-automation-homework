@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class ChromiumDriverCreator {
     private static final String HEADLESS_NEW = "--headless=new";
 
-    @Value("${headless:false}")
+    @Value("${headless:true}")
     private Boolean headless;
 
     public WebDriver createEdgeDriver() {

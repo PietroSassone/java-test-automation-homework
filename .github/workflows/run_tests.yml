@@ -7,10 +7,6 @@ on:
         description: 'Browser to use for the UI tests. Supported values: chrome, edge, firefox'
         required: false
         default: 'chrome'
-      headless:
-        description: 'Run UI tests in headless mode: true/false'
-        required: false
-        default: 'true'
 
 jobs:
   test:
@@ -29,10 +25,9 @@ jobs:
       - name: Print chosen input values
         run: |
           echo "Chosen browser: ${{ github.event.inputs.browser }}"
-          echo "Headless mode: ${{ github.event.inputs.headless }}"
-          
+
       - name: Run tests
-        run: mvn clean test -DbrowserName=${{ github.event.inputs.browserName }} -Dheadless=${{ github.event.inputs.headless == 'true' }}
+        run: mvn clean test -DbrowserName=${{ github.event.inputs.browserName }}
         continue-on-error: true
 
       - name: Archive test logs and Surefire + TestNG report
