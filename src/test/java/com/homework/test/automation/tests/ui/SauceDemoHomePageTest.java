@@ -38,7 +38,7 @@ public class SauceDemoHomePageTest extends AbstractTestNGSpringContextTests {
     private SauceLoginPage sauceLoginPage;
 
     @BeforeClass
-    public void setup(ITestContext context) {
+    public void setup(final ITestContext context) {
         userManager.initUserManager();
         driver = driverFactory.createAndGetWebDriver();
 
