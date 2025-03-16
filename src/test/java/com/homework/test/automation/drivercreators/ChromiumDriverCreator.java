@@ -25,7 +25,10 @@ public class ChromiumDriverCreator {
             EdgeOptions options = new EdgeOptions();
             options.addArguments("--no-proxy-server");
             options.addArguments("--disable-extensions");
+            options.addArguments("--incognito");
             options.addArguments("--disable-gpu");
+            options.addArguments("--disable-images");
+            options.addArguments("--no-sandbox");
         }
 
         return new EdgeDriver(edgeOptions);
