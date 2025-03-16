@@ -9,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 
 public class GuruHomePage extends BasePageObject {
-    private static final String GURU_PAGE_URL = "https://demo.guru99.com/test/guru99home/";
+    private static final String GURU_PAGE_URL = "https://demo.guru99.com/test/guru99home";
 
     private final TooltipPage tooltipPage;
 
@@ -37,7 +37,7 @@ public class GuruHomePage extends BasePageObject {
     }
 
     public GuruHomePage openPage() {
-        navigateToUrl(GURU_PAGE_URL);
+        openPageWithRetry(GURU_PAGE_URL);
         return this;
     }
 

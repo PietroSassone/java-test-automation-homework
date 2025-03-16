@@ -2,26 +2,31 @@ package com.homework.test.automation.tests.ui;
 
 import com.homework.test.automation.config.SpringConfig;
 import com.homework.test.automation.factory.DriverFactory;
+import com.homework.test.automation.listener.TestListener;
 import com.homework.test.automation.pageobjects.saucedemo.CartPage;
 import com.homework.test.automation.pageobjects.saucedemo.CheckoutPage;
 import com.homework.test.automation.pageobjects.saucedemo.ProductsPage;
 import com.homework.test.automation.pageobjects.saucedemo.SauceLoginPage;
 import com.homework.test.automation.util.UserManager;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Slf4j
+@Listeners(TestListener.class)
 @ContextConfiguration(classes = SpringConfig.class)
 public class SauceDemoHomePageTest extends AbstractTestNGSpringContextTests {
     /**
      * I choose to write these tests without Cucumber for an easier showcase of fluent page objects.
      * If you'd like to see some of my Cucumber test examples, see this repo: https://github.com/PietroSassone/selenium-ta-demo
      */
-
     @Autowired
     private DriverFactory driverFactory;
 
@@ -33,7 +38,7 @@ public class SauceDemoHomePageTest extends AbstractTestNGSpringContextTests {
     private SauceLoginPage sauceLoginPage;
 
     @BeforeClass
-    public void setup() {
+    public void setup(final ITestContext context) {
         userManager.initUserManager();
         driver = driverFactory.createAndGetWebDriver();
 
@@ -42,10 +47,13 @@ public class SauceDemoHomePageTest extends AbstractTestNGSpringContextTests {
         final ProductsPage productsPage = new ProductsPage(driver, cartPage);
 
         sauceLoginPage = new SauceLoginPage(driver, productsPage);
+
+        context.setAttribute("driver", driver);
     }
 
     @AfterClass
     public void tearDown() {
+        log.info("Shutting down the driver.");
         if (driver != null) {
             driver.quit();
         }
