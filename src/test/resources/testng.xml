@@ -3,7 +3,7 @@
 <suite name="Parallel Test Suite" parallel="classes" thread-count="4">
     <listeners>
         <listener class-name="com.homework.test.automation.listener.TestListener" />
-    </listeners
+    </listeners>
 
     <test name="UI Tests">
         <packages>
