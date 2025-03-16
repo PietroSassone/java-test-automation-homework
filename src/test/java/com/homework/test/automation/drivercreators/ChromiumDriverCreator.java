@@ -22,6 +22,10 @@ public class ChromiumDriverCreator {
         EdgeOptions edgeOptions = new EdgeOptions();
         if (headless) {
             edgeOptions.addArguments(HEADLESS_NEW);
+            EdgeOptions options = new EdgeOptions();
+            options.addArguments("--no-proxy-server");
+            options.addArguments("--disable-extensions");
+            options.addArguments("--disable-gpu");
         }
 
         return new EdgeDriver(edgeOptions);
