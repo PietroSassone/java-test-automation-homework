@@ -21,13 +21,18 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/checkout@v4
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-
+      
+      - name: Print chosen input values
+        run: |
+          echo "Chosen browser: ${{ github.event.inputs.browser }}"
+          echo "Headless mode: ${{ github.event.inputs.headless }}"
+          
       - name: Run tests
-        run: mvn clean test -DbrowserName=${{ github.event.inputs.browserName }} -Dheadless=${{ github.event.inputs.headless }}
+        run: mvn clean test -DbrowserName=${{ github.event.inputs.browserName }} -Dheadless=${{ github.event.inputs.headless == 'true' }}
         continue-on-error: true
 
       - name: Archive test logs and Surefire + TestNG report
