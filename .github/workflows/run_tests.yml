@@ -5,8 +5,13 @@ on:
     inputs:
       browserName:
         description: 'Browser to use for the UI tests. Supported values: chrome, edge, firefox'
-        required: false
+        required: true
         default: 'chrome'
+        type: choice
+        options:
+          - chrome
+          - edge
+          - firefox
 
 jobs:
   test:
@@ -24,7 +29,7 @@ jobs:
       
       - name: Print chosen input values
         run: |
-          echo "Chosen browser: ${{ github.event.inputs.browser }}"
+          echo "Chosen browser: ${{ github.event.inputs.browserName }}"
 
       - name: Run tests
         run: mvn clean test -DbrowserName=${{ github.event.inputs.browserName }}
