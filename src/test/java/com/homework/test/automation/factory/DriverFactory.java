@@ -3,9 +3,8 @@ package com.homework.test.automation.factory;
 import com.homework.test.automation.drivercreators.ChromiumDriverCreator;
 import com.homework.test.automation.drivercreators.FirefoxDriverCreator;
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -13,9 +12,9 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+@Slf4j
 @Component
 public class DriverFactory {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DriverFactory.class);
     private static final String CHROME_BROWSER_NAME = "chrome";
     private static final String FIREFOX_BROWSER_NAME = "firefox";
     private static final String EDGE_BROWSER_NAME = "edge";
@@ -42,7 +41,7 @@ public class DriverFactory {
 
     public WebDriver createAndGetWebDriver() {
         WebDriver webDriver;
-        LOGGER.info("Requested driver creation with name: {}", browserName);
+        log.info("Requested driver creation with name: {}", browserName);
         try {
             webDriver = webDriverSetupMethodsMap.get(browserName).call();
         } catch (NullPointerException nullPointerException) {

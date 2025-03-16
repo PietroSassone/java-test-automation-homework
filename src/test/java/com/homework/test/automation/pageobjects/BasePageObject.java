@@ -1,22 +1,21 @@
 package com.homework.test.automation.pageobjects;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.NoSuchElementException;
 
 import static java.lang.String.valueOf;
 
+@Slf4j
 public class BasePageObject {
     public static final long PAGE_OR_ELEMENT_LOAD_WAIT_SECONDS = 10;
-    private static final Logger LOGGER = LoggerFactory.getLogger(BasePageObject.class);
 
     private static final String COMPLETE = "complete";
     private static final String RETURN_DOCUMENT_READY_STATE = "return document.readyState";
@@ -34,7 +33,7 @@ public class BasePageObject {
     }
 
     protected void navigateToUrl(final String url) {
-        LOGGER.info("WebDriver navigating to URL {}", url);
+        log.info("WebDriver navigating to URL {}", url);
         driver.get(url);
         waitForPageToLoad();
     }
