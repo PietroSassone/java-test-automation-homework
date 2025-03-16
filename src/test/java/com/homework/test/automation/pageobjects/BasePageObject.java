@@ -29,7 +29,7 @@ public class BasePageObject {
     }
 
     public void scrollToWithJsScript(final WebElement webElement) {
-        log.info("Scrolling to element.");
+        log.info("Scrolling to element. {}", webElement);
         ((JavascriptExecutor) driver).executeScript(SCROLL_INTO_VIEW_SCRIPT, webElement);
     }
 
@@ -44,6 +44,7 @@ public class BasePageObject {
     }
 
     protected WebElement waitForElementToBeVisible(final WebElement webElement) {
+        log.info("Waiting for element to be fully visible: {}.", webElement);
         try {
             getWebDriverWait().until(ExpectedConditions.visibilityOf(webElement));
         } catch (NoSuchElementException e) {
@@ -53,7 +54,7 @@ public class BasePageObject {
     }
 
     protected WebElement waitForElementToBeClickable(final WebElement webElement) {
-        log.info("Waiting before clicking on element.");
+        log.info("Waiting before clicking on element {}.", webElement);
         try {
             getWebDriverWait().until(ExpectedConditions.elementToBeClickable(webElement));
         } catch (NoSuchElementException e) {
