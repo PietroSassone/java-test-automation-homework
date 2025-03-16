@@ -1,0 +1,44 @@
+name: Run Tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      browserName:
+        description: 'Browser to use for the UI tests. Supported values: chrome, edge, firefox'
+        required: false
+        default: 'chrome'
+      headless:
+        description: 'Run UI tests in headless mode: true/false'
+        required: false
+        default: 'true'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Run tests
+        run: mvn clean test -browserName=${{ github.event.inputs.browserName }} -Dheadless=${{ github.event.inputs.headless }}
+        continue-on-error: true
+
+      - name: Archive test logs and Surefire + TestNG report
+        if: always()
+        run: |
+          mkdir -p artifacts
+          zip -r artifacts/test-artifacts.zip target/logs target/surefire-reports || echo "No logs or test reports found."
+
+      - name: Upload test logs and Surefire + TestNG report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: artifacts/test-artifacts.zip
