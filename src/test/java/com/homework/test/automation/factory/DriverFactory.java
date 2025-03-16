@@ -51,7 +51,7 @@ public class DriverFactory {
             throw new RuntimeException("Issue when trying to start the driver. Message=" + e.getMessage());
         }
         webDriver.manage().window().maximize();
-        webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+        webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(200));
         return webDriver;
     }
 }

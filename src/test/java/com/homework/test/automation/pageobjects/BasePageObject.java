@@ -44,6 +44,7 @@ public class BasePageObject {
         int retryCount = 0;
         while (retryCount < 3) {
             try {
+                log.info("WebDriver navigating to URL with retry {}", url);
                 driver.get(url);
                 break;
             } catch (TimeoutException exception) {
