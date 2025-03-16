@@ -8,7 +8,7 @@ The UI tests are running in parallel. The API test suite is set to execute after
 
 **1. Technologies used**
 - Selenium 4 for UI tests
-- TestNG for executing the tests
+- TestNG for executing the tests and saving screenshots
 - Maven to help running the framework and manage dependencies
 - Maven Surefire plugin to run the test suite with automatic test report
 - Logback for logging
@@ -19,7 +19,7 @@ The UI tests are running in parallel. The API test suite is set to execute after
 **2. Reporting and logging**  
 The framework saves reports and logs in the target folder after a test run finishes.
 1. Logs are saved in target/logs
-1. TestNG and Surefire reports are saved in target/surefire-reports
+1. TestNG and Surefire reports are saved in target/surefire-reports along with any failed UI test screenshot
 
 **3. Pre-requirements for running the tests**
 - Have Maven installed.
