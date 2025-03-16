@@ -37,7 +37,7 @@ public class GuruHomePage extends BasePageObject {
     }
 
     public GuruHomePage openPage() {
-        navigateToUrl(GURU_PAGE_URL);
+        openPageWithRetry(GURU_PAGE_URL);
         return this;
     }
 

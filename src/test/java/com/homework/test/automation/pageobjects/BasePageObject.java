@@ -2,6 +2,7 @@ package com.homework.test.automation.pageobjects;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -37,6 +38,20 @@ public class BasePageObject {
         log.info("WebDriver navigating to URL {}", url);
         driver.get(url);
         waitForPageToLoad();
+    }
+
+    protected void openPageWithRetry(final String url) {
+        int retryCount = 0;
+        while (retryCount < 3) {
+            try {
+                navigateToUrl(url);
+                break;
+            } catch (TimeoutException exception) {
+                retryCount++;
+                if (retryCount == 3) throw exception;
+                log.info("Retrying to load the page {}", url);
+            }
+        }
     }
 
     protected WebDriverWait getWebDriverWait() {
