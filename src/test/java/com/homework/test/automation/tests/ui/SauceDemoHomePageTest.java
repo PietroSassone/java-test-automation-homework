@@ -7,6 +7,7 @@ import com.homework.test.automation.pageobjects.saucedemo.CheckoutPage;
 import com.homework.test.automation.pageobjects.saucedemo.ProductsPage;
 import com.homework.test.automation.pageobjects.saucedemo.SauceLoginPage;
 import com.homework.test.automation.util.UserManager;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,13 +16,13 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+@Slf4j
 @ContextConfiguration(classes = SpringConfig.class)
 public class SauceDemoHomePageTest extends AbstractTestNGSpringContextTests {
     /**
      * I choose to write these tests without Cucumber for an easier showcase of fluent page objects.
      * If you'd like to see some of my Cucumber test examples, see this repo: https://github.com/PietroSassone/selenium-ta-demo
      */
-
     @Autowired
     private DriverFactory driverFactory;
 
@@ -46,6 +47,7 @@ public class SauceDemoHomePageTest extends AbstractTestNGSpringContextTests {
 
     @AfterClass
     public void tearDown() {
+        log.info("Shutting down the driver.");
         if (driver != null) {
             driver.quit();
         }

@@ -2,11 +2,13 @@ package com.homework.test.automation.pageobjects.saucedemo;
 
 import com.homework.test.automation.model.User;
 import com.homework.test.automation.pageobjects.BasePageObject;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 
+@Slf4j
 public class SauceLoginPage extends BasePageObject {
     private static final String LOGIN_URL = "https://www.saucedemo.com/inventory.html";
 
@@ -45,6 +47,7 @@ public class SauceLoginPage extends BasePageObject {
     }
 
     public ProductsPage login(final User user) {
+        log.info("Logging in with use {}.", user.username());
         usernameField.sendKeys(user.username());
         passwordField.sendKeys(user.password());
         loginButton.click();

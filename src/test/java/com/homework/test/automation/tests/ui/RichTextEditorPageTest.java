@@ -3,6 +3,7 @@ package com.homework.test.automation.tests.ui;
 import com.homework.test.automation.config.SpringConfig;
 import com.homework.test.automation.factory.DriverFactory;
 import com.homework.test.automation.pageobjects.editor.RichTextEditorPage;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -11,6 +12,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+@Slf4j
 @ContextConfiguration(classes = SpringConfig.class)
 public class RichTextEditorPageTest extends AbstractTestNGSpringContextTests {
 
@@ -29,6 +31,7 @@ public class RichTextEditorPageTest extends AbstractTestNGSpringContextTests {
 
     @AfterClass
     public void tearDown() {
+        log.info("Shutting down the driver.");
         if (driver != null) {
             driver.quit();
         }

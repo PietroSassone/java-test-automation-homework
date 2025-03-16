@@ -15,7 +15,7 @@ import static java.lang.String.valueOf;
 
 @Slf4j
 public class BasePageObject {
-    public static final long PAGE_OR_ELEMENT_LOAD_WAIT_SECONDS = 10;
+    public static final long PAGE_OR_ELEMENT_LOAD_WAIT_SECONDS = 15;
 
     private static final String COMPLETE = "complete";
     private static final String RETURN_DOCUMENT_READY_STATE = "return document.readyState";
@@ -29,6 +29,7 @@ public class BasePageObject {
     }
 
     public void scrollToWithJsScript(final WebElement webElement) {
+        log.info("Scrolling to element.");
         ((JavascriptExecutor) driver).executeScript(SCROLL_INTO_VIEW_SCRIPT, webElement);
     }
 
@@ -52,6 +53,7 @@ public class BasePageObject {
     }
 
     protected WebElement waitForElementToBeClickable(final WebElement webElement) {
+        log.info("Waiting before clicking on element.");
         try {
             getWebDriverWait().until(ExpectedConditions.elementToBeClickable(webElement));
         } catch (NoSuchElementException e) {
@@ -61,6 +63,7 @@ public class BasePageObject {
     }
 
     protected void waitForPageToLoad() {
+        log.info("Waiting for the page to finish loading.");
         new WebDriverWait(this.driver, Duration.ofSeconds(PAGE_OR_ELEMENT_LOAD_WAIT_SECONDS)).until(
                 driver -> valueOf(((JavascriptExecutor) driver).executeScript(RETURN_DOCUMENT_READY_STATE)).equals(COMPLETE)
         );
